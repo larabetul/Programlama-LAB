@@ -1,0 +1,80 @@
+import sys,csv,itertools
+
+def my_frequency_with_dict(liste):
+    frequency_dict={}
+    for item in liste:
+        if item in frequency_dict.keys():
+            frequency_dict[item]=frequency_dict[item]+1
+        else:
+            frequency_dict[item]=1
+    return frequency_dict
+
+
+def my_frequency_with_dict_months(my_hist):
+    for i in range(1,12,+1):
+        if i not in my_hist.keys():
+            my_hist[i]=0
+
+
+    return my_hist
+
+def bubble_sort(liste_1):
+    n=len(liste_1)
+    print(liste_1)
+    for i in range (n-1,-1,-1):
+        for j in range(0,i):
+            if not (liste_1[j]<liste_1[j+1]):
+                temp=liste_1[j]
+                liste_1[j]=liste_1[j+1]
+                liste_1[j+1]=temp
+    return liste_1
+
+def my_median(liste2):
+    list_2=bubble_sort(liste2)
+    print(list_2)
+    n=len(list_2)
+    if n%2==1:
+        middle=int(n/2)
+        median=list_2[middle]
+    else:
+        middle_1=list_2[int(n/2)]
+        middle_2=list_2[int(n/2)-1]
+        median=(middle_1+middle_2)/2
+    return median
+def my_mean(list3):
+    s,t=0,0
+    for item in list3:
+        s=s+1
+        t=t+item
+    mean_=t/s
+    return mean_
+with open(sys.argv[1]+'/input_hw_2.csv',"r") as csv_file:
+    bilgiler=csv.reader(csv_file,delimiter=';')
+    liste=list(bilgiler)##bilgilerdeki her satır bir liste
+tek_liste=list(itertools.chain(*liste))
+tarih=[]
+for i in tek_liste:
+    sıralama=i.split(";")
+    for j in sıralama:
+        tarih.append(j)
+n=len(tarih)
+tarih_2=[]
+for i in range(3,n,4):
+    tarih_2.append(tarih[i].split("-"))
+tarih_3=[]
+n=len(tarih_2)
+for i in range(1,n,3):
+    tarih_3.append(tarih_2[i])
+ay=my_frequency_with_dict(tarih_3)
+ay_1=my_frequency_with_dict_months(ay)
+son=[]
+for i,j in ay.items():
+    son.append(j)
+sayilar=bubble_sort(son)
+
+
+
+
+with open(sys.argv[2]+'180401024_hw_2_output.txt',"w")as file:
+    a=my_median(sayilar)
+    file.write("ortalama:"+str(my_mean(sayilar)+"\n"+"medyan:"+str(x))
